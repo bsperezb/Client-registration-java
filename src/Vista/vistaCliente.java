@@ -7,7 +7,6 @@ package Vista;
 
 import access.Auxiliarfuntion;
 import access.clienteDAO;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 import model.Cliente;
 
@@ -21,7 +20,7 @@ public class vistaCliente extends javax.swing.JFrame {
      * Creates new form vistaCliente
      */
     public vistaCliente() {
-        
+
         initComponents();
         llenarTabla();
         labelID.setVisible(false);
@@ -31,15 +30,16 @@ public class vistaCliente extends javax.swing.JFrame {
 
     public void llenarTabla() {
         clienteDAO dao = new clienteDAO();
- 
+
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
-            dao.getTable(),
-            new String [] {
-                "ID", "Documente", "Nombres", "Apellidos", "Telefono"
-            }
-        )); 
+                dao.getTable(),
+                new String[]{
+                    "ID", "Documente", "Nombres", "Apellidos", "Telefono"
+                }
+        ));
     }
-    public void eliminarCampos(){
+
+    public void eliminarCampos() {
         textDocumento.setText("");
         textNombres.setText("");
         textApellidos.setText("");
@@ -331,97 +331,84 @@ public class vistaCliente extends javax.swing.JFrame {
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         // TODO add your handling code here:
-      
-          String mensaje = "";
-        if (radioCreate.isSelected()){
-            mensaje="Creado";
+
+        String mensaje = "";
+        if (radioCreate.isSelected()) {
+            mensaje = "Creado";
             clienteDAO dao = new clienteDAO();
             Cliente cliente = new Cliente();
-            
+
             String documento = textDocumento.getText();
             String nombres = textNombres.getText();
             String apellidos = textApellidos.getText();
             String telefono = textTelefono.getText();
-            
+
             cliente.setDoc_identidad(Auxiliarfuntion.getIntegerValue(documento));
             cliente.setNombres(nombres);
             cliente.setApellidos(apellidos);
             cliente.setTelefono(Auxiliarfuntion.getIntegerValue(telefono));
-            
+
             boolean respuesta = dao.insertCliente(cliente);
             llenarTabla();
-            if(respuesta){
-                JOptionPane.showMessageDialog(this , mensaje);
-           
-            }else{
-                mensaje="something was wrong";
-                JOptionPane.showMessageDialog(this , mensaje);
+            if (respuesta) {
+                JOptionPane.showMessageDialog(this, mensaje);
+
+            } else {
+                mensaje = "something was wrong";
+                JOptionPane.showMessageDialog(this, mensaje);
             }
             eliminarCampos();
-      
-        }else if (radioDelete.isSelected()){
-            /*            textDocumento.setEditable(false);
-            textNombres.setEditable(false);
-            textApellidos.setEditable(false);
-            textTelefono.setEditable(false);*/
-            
-            
+
+        } else if (radioDelete.isSelected()) {
+
             clienteDAO dao = new clienteDAO();
             String id_cliente = textID.getText();
             boolean resultado = dao.deleteCliente(id_cliente);
             eliminarCampos();
-            
-            if (resultado){
+
+            if (resultado) {
                 mensaje = "eliminado correctamete";
-                JOptionPane.showMessageDialog(this , mensaje);
-            }else{
+                JOptionPane.showMessageDialog(this, mensaje);
+            } else {
                 mensaje = "id no existe";
-                JOptionPane.showMessageDialog(this , mensaje);
+                JOptionPane.showMessageDialog(this, mensaje);
             }
             llenarTabla();
-            
-            
-            
-        }else if(radioUpdate.isSelected()){
+
+        } else if (radioUpdate.isSelected()) {
             clienteDAO dao = new clienteDAO();
             Cliente cliente = new Cliente();
-            
+
             String documento = textDocumento.getText();
             String nombres = textNombres.getText();
             String apellidos = textApellidos.getText();
             String telefono = textTelefono.getText();
             String id = textID.getText();
-            
+
             cliente.setDoc_identidad(Auxiliarfuntion.getIntegerValue(documento));
             cliente.setNombres(nombres);
             cliente.setApellidos(apellidos);
             cliente.setTelefono(Auxiliarfuntion.getIntegerValue(telefono));
             cliente.setId(Auxiliarfuntion.getIntegerValue(id));
-            
+
             boolean respuesta = dao.updateCliente(cliente);
-            
-            
-            if (respuesta){
+
+            if (respuesta) {
                 mensaje = "Modificado correctamete";
-                JOptionPane.showMessageDialog(this , mensaje);
-            }else{
+                JOptionPane.showMessageDialog(this, mensaje);
+            } else {
                 mensaje = "id no existe";
-                JOptionPane.showMessageDialog(this , mensaje);
+                JOptionPane.showMessageDialog(this, mensaje);
             }
             eliminarCampos();
             llenarTabla();
-            
-            
-            
-        }else{
+
+        } else {
             //if somethin was wrong
             mensaje = " seleccione alguna opcion";
         }
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void radioCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCreateActionPerformed
@@ -449,17 +436,15 @@ public class vistaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         String id = textID.getText();
         clienteDAO dao = new clienteDAO();
-         
-         
+
         Cliente cliente = dao.getCliente(id);
-         
+
         textDocumento.setText(String.valueOf(cliente.getDoc_identidad()));
         textNombres.setText(cliente.getNombres());
         textApellidos.setText(cliente.getApellidos());
         textTelefono.setText(String.valueOf(cliente.getTelefono()));
-         
-         
-        
+
+
     }//GEN-LAST:event_textIDActionPerformed
 
     private void textIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textIDKeyPressed
@@ -473,7 +458,7 @@ public class vistaCliente extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String mensaje = "Hasta la Proxima";
-        JOptionPane.showMessageDialog(this , mensaje);
+        JOptionPane.showMessageDialog(this, mensaje);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
